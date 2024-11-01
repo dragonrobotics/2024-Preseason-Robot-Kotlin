@@ -11,7 +11,7 @@ object Constants
 {
     object OperatorConstants
     {
-        //const val DRIVER_CONTROLLER_PORT = 0
+        const val DRIVER_CONTROLLER_PORT: Int = 0
 
         const val lowerShooterPort = 5
         const val higherShooterPort = 6
@@ -19,6 +19,7 @@ object Constants
         const val lowerIntake: Int = 6
         const val higherIntake: Int = 5
         const val indexer: Int = 1
+        const val beamBreak: Int = 1
     }
 }
 

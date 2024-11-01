@@ -25,7 +25,7 @@ import frc.robot.subsystems.ShooterSubsystem
 object RobotContainer
 {
 
-    private val driverController = CommandXboxController(1)
+    private val driverController = CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT)
     private val shooter = ShooterSubsystem
 
     init
