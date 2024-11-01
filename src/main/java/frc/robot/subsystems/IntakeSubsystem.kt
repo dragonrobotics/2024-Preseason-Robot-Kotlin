@@ -33,7 +33,7 @@ object IntakeSubsystem: SubsystemBase() {
         indexer.setVoltage(12.0)
     }
 
-    public fun Stop(){
+    public fun stop(){
         intakeMotor.stopMotor()
         indexer.stopMotor()
     }

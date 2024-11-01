@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger
 import frc.robot.commands.Autos
 import frc.robot.commands.ExampleCommand
 import frc.robot.subsystems.ExampleSubsystem
+import frc.robot.subsystems.IntakeSubsystem
 import frc.robot.subsystems.ShooterSubsystem
 
 /**
@@ -27,6 +28,7 @@ object RobotContainer
 
     private val driverController = CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT)
     private val shooter = ShooterSubsystem
+    private val intake = IntakeSubsystem
 
     init
     {
@@ -55,9 +57,34 @@ object RobotContainer
         driverController.rightTrigger().onTrue(Shoot())
     }
 
+    //Intake
+    fun Intake() : Command{
+        if(!intake.hasNote()){
+            return sequence(
+                runOnce({ intake.Pull()}, intake),
+                waitUntil({ intake.hasNote()})).finallyDo{-> intake.stop() }
+        }
+        else{return none()}
+    }
+
+    //Spit Out Note
+    fun SpitOut() : Command{
+        return sequence(
+            runOnce({ intake.Push()}, intake),
+            waitSeconds(2.0)
+        ).finallyDo{-> intake.stop() }
+
+    }
+
+    //FIRE IN THE HOLE
     fun Shoot() : Command {
         return sequence(
             runOnce( {shooter.shoot()}, shooter),
-            waitSeconds(1.0)).finallyDo{-> shooter.stop() }
+            waitUntil({shooter.getShooterSpeed() >= 3000}),
+            runOnce( { intake.Pull() }, intake),
+            waitSeconds(1.0)).finallyDo{->
+                shooter.stop()
+                intake.stop()
+            }
     }
 }
