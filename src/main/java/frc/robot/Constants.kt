@@ -11,7 +11,7 @@ object Constants
 {
     object OperatorConstants
     {
-        const val DRIVER_CONTROLLER_PORT = 0
+        //const val DRIVER_CONTROLLER_PORT = 0
 
         const val lowerShooterPort = 5
         const val higherShooterPort = 6
