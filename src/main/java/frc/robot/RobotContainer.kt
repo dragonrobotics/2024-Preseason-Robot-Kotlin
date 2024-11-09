@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger
 
 import frc.robot.commands.Autos
 import frc.robot.commands.ExampleCommand
+import frc.robot.subsystems.DriveTrain
 import frc.robot.subsystems.ExampleSubsystem
 import frc.robot.subsystems.IntakeSubsystem
 import frc.robot.subsystems.ShooterSubsystem
@@ -29,6 +30,7 @@ object RobotContainer
     private val driverController = CommandXboxController(Constants.OperatorConstants.DRIVER_CONTROLLER_PORT)
     private val shooter = ShooterSubsystem
     private val intake = IntakeSubsystem
+    private val driveTrain = DriveTrain
 
     init
     {
@@ -55,6 +57,32 @@ object RobotContainer
         // cancelling on release.
         //driverController.b().whileTrue(ExampleSubsystem.exampleMethodCommand())
         driverController.rightTrigger().onTrue(Shoot())
+        driverController.leftBumper().onTrue(Intake())
+        driverController.rightBumper().onTrue(SpitOut())
+
+        driveTrain.defaultCommand = driveTrain.getDriveCommand({
+            driverController.getRawAxis(0)
+        }, {
+            driverController.getRawAxis(1)
+        }, {
+            driverController.getRawAxis(4)
+        }, true)
+
+        driverController.back().onTrue(Zero())
+        driverController.start().onTrue(StopAll())
+    }
+
+    //Zero
+    fun Zero(): Command{
+        return runOnce({ driveTrain.zero()}, driveTrain)
+    }
+
+    //Stop Intake and Shooter
+    fun StopAll(): Command{
+        return runOnce({
+            shooter.stop()
+            intake.stop()
+        }, shooter, intake)
     }
 
     //Intake
@@ -71,7 +99,7 @@ object RobotContainer
     fun SpitOut() : Command{
         return sequence(
             runOnce({ intake.Push()}, intake),
-            waitSeconds(2.0)
+            waitSeconds(1.0)
         ).finallyDo{-> intake.stop() }
 
     }
@@ -82,7 +110,7 @@ object RobotContainer
             runOnce( {shooter.shoot()}, shooter),
             waitUntil({shooter.getShooterSpeed() >= 3000}),
             runOnce( { intake.Pull() }, intake),
-            waitSeconds(1.0)).finallyDo{->
+            waitSeconds(0.5)).finallyDo{->
                 shooter.stop()
                 intake.stop()
             }

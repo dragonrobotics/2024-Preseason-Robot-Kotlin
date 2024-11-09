@@ -24,12 +24,12 @@ object IntakeSubsystem: SubsystemBase() {
     }
 
     public fun Pull(){
-        intakeMotor.setVoltage(8.0)
-        indexer.setVoltage(-10.0)
+        intakeMotor.setVoltage(-10.0)
+        indexer.setVoltage(-9.0)
     }
 
     public fun Push(){
-        intakeMotor.setVoltage(-12.0)
+        intakeMotor.setVoltage(12.0)
         indexer.setVoltage(12.0)
     }
 

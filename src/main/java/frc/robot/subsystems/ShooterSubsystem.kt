@@ -17,19 +17,18 @@ object ShooterSubsystem : SubsystemBase() {
         shootMotorFollower.restoreFactoryDefaults()
 
         shootMotorFollower.follow(shootMotor)
-        shootMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
-        shootMotorFollower.setIdleMode(CANSparkBase.IdleMode.kBrake)
-
-        shootMotor.burnFlash()
-        shootMotorFollower.burnFlash()
     }
 
     public fun shoot(){
+        shootMotor.setIdleMode(CANSparkBase.IdleMode.kCoast)
+        shootMotorFollower.setIdleMode(CANSparkBase.IdleMode.kCoast)
         shootMotor.setVoltage(12.0)
     }
 
     public fun stop(){
         shootMotor.stopMotor()
+        shootMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
+        shootMotorFollower.setIdleMode(CANSparkBase.IdleMode.kBrake)
     }
 
     public fun getShooterSpeed() : Double{
