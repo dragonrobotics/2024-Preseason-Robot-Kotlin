@@ -22,7 +22,7 @@ object ShooterSubsystem : SubsystemBase() {
     public fun shoot(){
         shootMotor.setIdleMode(CANSparkBase.IdleMode.kCoast)
         shootMotorFollower.setIdleMode(CANSparkBase.IdleMode.kCoast)
-        shootMotor.setVoltage(12.0)
+        shootMotor.setVoltage(9.0)
     }
 
     public fun stop(){

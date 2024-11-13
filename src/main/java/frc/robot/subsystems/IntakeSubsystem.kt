@@ -25,7 +25,7 @@ object IntakeSubsystem: SubsystemBase() {
 
     public fun Pull(){
         intakeMotor.setVoltage(-10.0)
-        indexer.setVoltage(-9.0)
+        indexer.setVoltage(-4.0)
     }
 
     public fun Push(){

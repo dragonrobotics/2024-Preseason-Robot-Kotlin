@@ -1,5 +1,6 @@
 package frc.robot
 
+import edu.wpi.first.cameraserver.CameraServer
 import edu.wpi.first.wpilibj2.command.Command
 //import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.Commands.*
@@ -32,11 +33,13 @@ object RobotContainer
     private val intake = IntakeSubsystem
     private val driveTrain = DriveTrain
 
+
     init
     {
         configureBindings()
         // Reference the Autos object so that it is initialized, placing the chooser on the dashboard
         Autos
+        CameraServer.startAutomaticCapture()
     }
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -108,7 +111,7 @@ object RobotContainer
     fun Shoot() : Command {
         return sequence(
             runOnce( {shooter.shoot()}, shooter),
-            waitUntil({shooter.getShooterSpeed() >= 3000}),
+            waitUntil({shooter.getShooterSpeed() >= 2500}),
             runOnce( { intake.Pull() }, intake),
             waitSeconds(0.5)).finallyDo{->
                 shooter.stop()
