@@ -26,7 +26,7 @@ object Robot : TimedRobot()
      * the [autonomousInit] method will set it to the value selected in
      *the  AutoChooser on the dashboard.
      */
-    private var autonomousCommand: Command = Autos.defaultAutonomousCommand
+    private var autonomousCommand: Command = Autos.getAutonomousCommand()
 
 
     /**
@@ -74,7 +74,7 @@ object Robot : TimedRobot()
     {
         // We store the command as a Robot property in the rare event that the selector on the dashboard
         // is modified while the command is running since we need to access it again in teleopInit()
-        autonomousCommand = Autos.selectedAutonomousCommand
+        autonomousCommand = Autos.getAutonomousCommand()
         autonomousCommand.schedule()
     }
 

@@ -56,7 +56,7 @@ object DriveTrain: SubsystemBase() {
         AutoBuilder.configureHolonomic({swerveDrive.getPose()}, {swerveDrive.resetOdometry(pose)},
             {swerveDrive.getRobotVelocity()}, {swerveDrive.setChassisSpeeds(speeds)},
                 HolonomicPathFollowerConfig(
-                    PIDConstants(0.0),
+                    PIDConstants(0.5),
                     PIDConstants(0.0),
                 maximumSpeed, 2.0,
                 ReplanningConfig()),{
